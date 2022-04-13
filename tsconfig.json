@@ -14,8 +14,7 @@
       "@/tests/*": ["../tests/*"]
     },
     "allowJs": true,
-    "resolveJsonModule": true,
-    "strict": false
+    "resolveJsonModule": true
   },
   "include": ["src"]
 }
