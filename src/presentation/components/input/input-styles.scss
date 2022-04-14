@@ -1,0 +1,12 @@
+.inputWrap {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  align-items: center;
+}
+
+.status {
+  position: absolute;
+  right: 8px;
+  top: 10px;
+}

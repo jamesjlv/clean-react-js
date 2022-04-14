@@ -84,19 +84,6 @@ button {
     height: 48px;
   }
 
-  .inputWrap {
-    display: flex;
-    flex-direction: row;
-    position: relative;
-    align-items: center;
-  }
-
-  .status {
-    position: absolute;
-    right: 8px;
-    top: 10px;
-  }
-
   .link {
     margin: 16px 0;
     color: $primaryDark;
@@ -112,10 +99,6 @@ button {
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
-
-  .loading {
-    // display: none;
   }
 
   .error {
