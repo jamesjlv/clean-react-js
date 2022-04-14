@@ -5,7 +5,7 @@ import Styles from "./form-status-styles.scss";
 
 export const FormStatus: React.FC = () => {
   const {
-    state: { isLoading, errorMessage },
+    state: { isLoading },
     errorState: { main },
   } = useContext(Context);
 
