@@ -8,5 +8,11 @@ describe("Login page", () => {
     expect(errorWrap.childElementCount).toBe(0);
     const submit = getByTestId("submit") as HTMLButtonElement;
     expect(submit.disabled).toBe(true);
+    const emailStatus = getByTestId("email");
+    expect(emailStatus.title).toBe("Campo obrigatório");
+    expect(emailStatus.textContent).toBe("🔴");
+    const passwordStatus = getByTestId("password");
+    expect(passwordStatus.title).toBe("Campo obrigatório");
+    expect(passwordStatus.textContent).toBe("🔴");
   });
 });
