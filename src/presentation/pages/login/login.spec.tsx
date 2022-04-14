@@ -50,7 +50,7 @@ describe("Login page", () => {
     expect(passwordStatus.textContent).toBe("🔴");
   });
 
-  test("Should call validation with correct values", () => {
+  test("Should call validation with correct email", () => {
     const {
       sut: { getByTestId },
       validationSpy,
