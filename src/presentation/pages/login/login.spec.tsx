@@ -56,19 +56,30 @@ describe("Login page", () => {
       validationSpy,
     } = makeSut();
     const email = getByTestId("email");
-    const password = getByTestId("password");
     fireEvent.input(email, {
       target: {
         value: "any_email",
       },
     });
+
+    expect(validationSpy.input).toEqual({
+      email: "any_email",
+    });
+  });
+  test("Should call validation with correct password", () => {
+    const {
+      sut: { getByTestId },
+      validationSpy,
+    } = makeSut();
+    const password = getByTestId("password");
     fireEvent.input(password, {
       target: {
         value: "any_password",
       },
     });
+
     expect(validationSpy.input).toEqual({
-      email: "any_email",
+      password: "any_password",
     });
   });
 });
