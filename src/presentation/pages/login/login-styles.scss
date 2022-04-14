@@ -94,14 +94,4 @@ button {
       text-decoration: underline;
     }
   }
-
-  .loader {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .error {
-    color: $primaryLight;
-  }
 }
