@@ -31,7 +31,9 @@ export const Login: React.FC = () => {
             name="password"
             placeholder="Digite sua senha"
           />
-          <button type="submit">Entrar</button>
+          <button data-testid="submit" type="submit" disabled>
+            Entrar
+          </button>
           <span className={Styles.link}>Cadastre-se</span>
           <FormStatus />
         </form>
