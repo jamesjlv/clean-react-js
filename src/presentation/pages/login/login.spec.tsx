@@ -82,4 +82,21 @@ describe("Login page", () => {
     expect(passwordStatus.title).toBe(validationSpy.errorMessage);
     expect(passwordStatus.textContent).toBe("🔴");
   });
+  test("Should show valid password state if Validation succeeds", () => {
+    const {
+      sut: { getByTestId },
+      validationSpy,
+    } = makeSut();
+    validationSpy.errorMessage = null;
+    const password = getByTestId("password");
+    fireEvent.input(password, {
+      target: {
+        value: faker.internet.password(),
+      },
+    });
+
+    const passwordStatus = getByTestId("passwordStatus");
+    expect(passwordStatus.title).toBe("Tudo certo!");
+    expect(passwordStatus.textContent).toBe("🟢");
+  });
 });
