@@ -33,7 +33,6 @@ export const Login: React.FC<Props> = ({
   ): Promise<void> {
     event.preventDefault();
     setState({ ...state, isLoading: true });
-    console.log({ email: state.email, password: state.password });
     await authentication.auth({ email: state.email, password: state.password });
   }
 
