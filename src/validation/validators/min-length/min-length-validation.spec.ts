@@ -7,7 +7,7 @@ describe("MinLengthValidation", () => {
     const error = sut.validate("123");
     expect(error).toEqual(new InvalidFieldError());
   });
-  test("Should return falsy if value lenght is more than required", () => {
+  test("Should return falsy if value lenght is more than minLimit", () => {
     const sut = new MinLengthValidation("field", 1);
     const error = sut.validate("123");
     expect(error).toBeFalsy();
