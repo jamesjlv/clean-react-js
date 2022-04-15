@@ -9,6 +9,7 @@ import Context from "@/presentation/contexts/form/form-context";
 import Styles from "./login-styles.scss";
 import { Validation } from "@/presentation/protocols/validation";
 import { Authentication } from "@/domain/usecases";
+import { Link, useHistory } from "react-router-dom";
 
 type Props = {
   validation: Validation;
@@ -19,6 +20,7 @@ export const Login: React.FC<Props> = ({
   validation,
   authentication,
 }: Props) => {
+  const history = useHistory();
   const [state, setState] = useState({
     isLoading: false,
     emailError: "Campo obrigatório",
@@ -42,6 +44,7 @@ export const Login: React.FC<Props> = ({
         password: state.password,
       });
       localStorage.setItem("accessToken", account.accessToken);
+      history.replace("/");
     } catch (error) {
       setState({ ...state, isLoading: false, mainError: error.message });
     }
@@ -78,7 +81,9 @@ export const Login: React.FC<Props> = ({
           >
             Entrar
           </button>
-          <span className={Styles.link}>Cadastre-se</span>
+          <Link data-testid="signup" to="/signup" className={Styles.link}>
+            Cadastre-se
+          </Link>
           <FormStatus />
         </form>
       </Context.Provider>
