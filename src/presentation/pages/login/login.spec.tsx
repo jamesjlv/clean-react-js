@@ -74,7 +74,7 @@ const populatePasswordField = (
     },
   });
 };
-const simulateStatusForField = (
+const testStatusForField = (
   sut: RenderResult,
   fieldName: string,
   validationError?: string
@@ -102,8 +102,8 @@ describe("Login page", () => {
     expect(errorWrap.childElementCount).toBe(0);
     const submit = sut.getByTestId("submit") as HTMLButtonElement;
     expect(submit.disabled).toBe(true);
-    simulateStatusForField(sut, "email", validationSpy.errorMessage);
-    simulateStatusForField(sut, "password", validationSpy.errorMessage);
+    testStatusForField(sut, "email", validationSpy.errorMessage);
+    testStatusForField(sut, "password", validationSpy.errorMessage);
   });
 
   test("Should show email error if validation fails", () => {
@@ -111,24 +111,24 @@ describe("Login page", () => {
       validationError: faker.random.words(),
     });
     populateEmailField(sut);
-    simulateStatusForField(sut, "email", validationSpy.errorMessage);
+    testStatusForField(sut, "email", validationSpy.errorMessage);
   });
   test("Should show password error if validation fails", () => {
     const { sut, validationSpy } = makeSut({
       validationError: faker.random.words(),
     });
     populatePasswordField(sut);
-    simulateStatusForField(sut, "password", validationSpy.errorMessage);
+    testStatusForField(sut, "password", validationSpy.errorMessage);
   });
   test("Should show valid password state if Validation succeeds", () => {
     const { sut } = makeSut();
     populatePasswordField(sut);
-    simulateStatusForField(sut, "password");
+    testStatusForField(sut, "password");
   });
   test("Should show valid email state if Validation succeeds", () => {
     const { sut } = makeSut();
     populateEmailField(sut);
-    simulateStatusForField(sut, "email");
+    testStatusForField(sut, "email");
   });
   test("Should enable submit button if form is valid", () => {
     const { sut } = makeSut();
