@@ -8,23 +8,41 @@ import {
 import { Login } from "./login";
 import { ValidationStub } from "@/presentation/test";
 import faker from "@faker-js/faker";
+import { Authentication, AuthenticationParams } from "@/domain/usecases";
+import { AccountModel } from "@/domain/models";
+import { mockAccountModel } from "@/domain/test";
 
 type SutTypes = {
   sut: RenderResult;
   validationSpy: ValidationStub;
+  authenticationSpy: AuthenticationSpy;
 };
 
 type SutParams = {
   validationError?: string;
 };
 
+export class AuthenticationSpy implements Authentication {
+  account = mockAccountModel();
+  params: AuthenticationParams;
+
+  async auth(params: AuthenticationParams): Promise<AccountModel> {
+    this.params = params;
+    return Promise.resolve(this.account);
+  }
+}
+
 const makeSut = (params?: SutParams): SutTypes => {
   const validationSpy = new ValidationStub();
+  const authenticationSpy = new AuthenticationSpy();
   validationSpy.errorMessage = params?.validationError;
-  const sut = render(<Login validation={validationSpy} />);
+  const sut = render(
+    <Login validation={validationSpy} authentication={authenticationSpy} />
+  );
   return {
     sut,
     validationSpy,
+    authenticationSpy,
   };
 };
 
@@ -155,5 +173,31 @@ describe("Login page", () => {
     fireEvent.click(submit);
     const spinner = getByTestId("spinner");
     expect(spinner).toBeTruthy();
+  });
+  test("Should call Authentication with correct values", () => {
+    const {
+      sut: { getByTestId },
+      authenticationSpy,
+    } = makeSut();
+    const email = getByTestId("email");
+    const password = getByTestId("password");
+    const params = {
+      email: faker.internet.email(),
+      password: faker.internet.password(),
+    };
+    fireEvent.input(email, {
+      target: {
+        value: params.email,
+      },
+    });
+    fireEvent.input(password, {
+      target: {
+        value: params.password,
+      },
+    });
+    const submit = getByTestId("submit");
+    fireEvent.click(submit);
+
+    expect(authenticationSpy.params).toEqual({ ...params });
   });
 });
