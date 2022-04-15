@@ -1,15 +1,14 @@
 import React from "react";
 import {
-  act,
   cleanup,
   fireEvent,
   render,
   RenderResult,
-  waitFor,
 } from "@testing-library/react";
+import faker from "@faker-js/faker";
+import "jest-localstorage-mock";
 import { Login } from "./login";
 import { AuthenticationSpy, ValidationStub } from "@/presentation/test";
-import faker from "@faker-js/faker";
 import { InvalidCredentialsError } from "@/domain/errors";
 
 type SutTypes = {
@@ -80,7 +79,14 @@ const simulateStatusForField = (
 };
 
 describe("Login page", () => {
-  afterEach(cleanup);
+  afterEach(() => {
+    cleanup();
+    localStorage.clear();
+  });
+  beforeEach(() => {
+    cleanup();
+    localStorage.clear();
+  });
 
   test("Should start with initial state", () => {
     const { sut, validationSpy } = makeSut({
@@ -169,5 +175,14 @@ describe("Login page", () => {
     const mainError = await sut.findByTestId("mainError");
     expect(mainError.textContent).toBe(error.message);
     expect(errorWrap.childElementCount).toBe(1);
+  });
+  test("Should add accessToken to localStorage on success", async () => {
+    const { sut, authenticationSpy } = makeSut();
+    simulateValidSubmit(sut);
+    await sut.findByTestId("form");
+    // expect(localStorage.setItem).toHaveBeenCalledWith(
+    //   "accessToken",
+    //   authenticationSpy.account.accessToken
+    // );
   });
 });
