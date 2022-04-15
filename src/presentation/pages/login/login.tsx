@@ -28,16 +28,23 @@ export const Login: React.FC<Props> = ({
     mainError: "",
   });
 
-  async function handleSubmit(
+  const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>
-  ): Promise<void> {
+  ): Promise<void> => {
     event.preventDefault();
     if (state.isLoading || state.emailError || state.passwordError) {
       return;
     }
-    setState({ ...state, isLoading: true });
-    await authentication.auth({ email: state.email, password: state.password });
-  }
+    try {
+      setState({ ...state, isLoading: true });
+      await authentication.auth({
+        email: state.email,
+        password: state.password,
+      });
+    } catch (error) {
+      setState({ ...state, isLoading: false, mainError: error.message });
+    }
+  };
 
   useEffect(() => {
     setState({
